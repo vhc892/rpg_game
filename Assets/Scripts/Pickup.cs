@@ -88,6 +88,7 @@ public class Pickup : MonoBehaviour
                 Debug.Log("Health");
             break;
             case PickUpType.StaminaGlobe:
+                Stamina.Instance.RefreshStamina();
                 Debug.Log("Stamina");
             break;
 

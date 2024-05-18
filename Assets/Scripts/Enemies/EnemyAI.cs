@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private float roamChangeDirFloat = 2f;
-    [SerializeField] private float attackRange = 5f;
+    [SerializeField] private float attackRange = 0f;
     [SerializeField] private MonoBehaviour enemyType;
     [SerializeField] private float attackCooldown = 2f;
     [SerializeField] private bool stopMovingWhileAttacking = false;
@@ -29,17 +29,14 @@ public class EnemyAI : MonoBehaviour
         enemyPathfinding = GetComponent<EnemyPathfinding>();
         state = State.Roaming;
     }
-
     private void Start()
     {
         roamPosition = GetRoamingPosition();
     }
-
     private void Update()
     {
         MovementStateControl();
     }
-
     private void MovementStateControl()
     {
         switch (state)
@@ -54,7 +51,6 @@ public class EnemyAI : MonoBehaviour
                 break;
         }
     }
-
     private void Roaming()
     {
         timeRoaming += Time.deltaTime;
@@ -71,7 +67,6 @@ public class EnemyAI : MonoBehaviour
             roamPosition = GetRoamingPosition();
         }
     }
-
     private void Attacking()
     {
         if (Vector2.Distance(transform.position, PlayerController.Instance.transform.position) > attackRange)
@@ -97,7 +92,6 @@ public class EnemyAI : MonoBehaviour
             StartCoroutine(AttackCooldownRoutine());
         }
     }
-
     private IEnumerator AttackCooldownRoutine()
     {
         yield return new WaitForSeconds(attackCooldown);

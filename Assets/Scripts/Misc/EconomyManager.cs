@@ -9,6 +9,10 @@ public class EconomyManager : Singleton<EconomyManager>, IDataPersistence
 
     const string COIN_AMOUNT_TEXT = "GoldAmountText";
 
+    private void Start()
+    {
+        UpdateCurrentGold();
+    }
     public void LoadData(GameData data)
     {
         this.currentGold = data.currentGold;
@@ -17,6 +21,7 @@ public class EconomyManager : Singleton<EconomyManager>, IDataPersistence
     {
         data.currentGold = this.currentGold;
     }
+    
     public void UpdateCurrentGold()
     {
         currentGold += 1;
