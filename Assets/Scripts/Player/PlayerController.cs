@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : Singleton<PlayerController>
+public class PlayerController : Singleton<PlayerController>, IDataPersistence
 {
     public bool FacingLeft { get { return facingLeft; } }
 
@@ -33,6 +33,14 @@ public class PlayerController : Singleton<PlayerController>
         mySpriteRender = GetComponent<SpriteRenderer>();
         knockback = GetComponent<Knockback>();
     }
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPositon;
+    }
+    public void SaveData(ref GameData data)
+    {
+        data.playerPositon = this.transform.position;
+    }
 
     private void Start()
     {
@@ -50,6 +58,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         PlayerInput();
     }
+
 
     private void FixedUpdate()
     {
