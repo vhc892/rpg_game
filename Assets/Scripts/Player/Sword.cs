@@ -64,7 +64,7 @@ public class Sword : MonoBehaviour, IWeapon
     {
         Vector3 mousePos = Input.mousePosition;
         Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(PlayerController.Instance.transform.position);
-
+        // angle between Ox and mouse(x,y)
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         if(mousePos.x < playerScreenPoint.x)
         {

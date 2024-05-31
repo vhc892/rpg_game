@@ -329,7 +329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &150612916
 Transform:
   m_ObjectHideFlags: 0
@@ -1562,6 +1562,7 @@ GameObject:
   - component: {fileID: 960472782}
   - component: {fileID: 960472781}
   - component: {fileID: 960472780}
+  - component: {fileID: 960472785}
   m_Layer: 0
   m_Name: ForeGround
   m_TagString: Untagged
@@ -6584,6 +6585,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &960472785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960472778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140a39cdeb37280448b5f21ef72e58ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1039775766 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2201358097969292704, guid: 481fdbf66b51e194b9d3a37d39da8a9a, type: 3}
@@ -6608,7 +6621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2017723101950881202, guid: e2800ff50831c7747a3c5c03b9fe42e1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2195666633459365609, guid: e2800ff50831c7747a3c5c03b9fe42e1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20136,11 +20149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3466832253855214602, guid: 5bf9798e79acf6e4da81224e45fb86f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.801389
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 3466832253855214602, guid: 5bf9798e79acf6e4da81224e45fb86f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.6190854
+      value: 2.34
       objectReference: {fileID: 0}
     - target: {fileID: 3466832253855214602, guid: 5bf9798e79acf6e4da81224e45fb86f0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20180,7 +20193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6126213535611334454, guid: 5bf9798e79acf6e4da81224e45fb86f0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

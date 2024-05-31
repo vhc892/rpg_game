@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 public class DataPersistenceManager : MonoBehaviour
 {
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
-    [SerializeField] private bool useEncryption;
+    private string secretKey;  
 
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
 
-    public static DataPersistenceManager instance {  get; private set; }
+    public static DataPersistenceManager instance { get; private set; }
     private void Awake()
     {
         if (instance != null)
@@ -24,7 +26,8 @@ public class DataPersistenceManager : MonoBehaviour
     }
     private void Start()
     {
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+        this.secretKey = "secretkey";
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, secretKey);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
     }
@@ -35,9 +38,14 @@ public class DataPersistenceManager : MonoBehaviour
     public void LoadGame()
     {
         this.gameData = dataHandler.Load();
-        if(this.gameData == null)
+        if (this.gameData == null)
         {
             Debug.Log("No data was found. Enter new game...");
+            NewGame();
+        }
+        else if (!dataHandler.VerifyMAC(gameData))  
+        {
+            Debug.LogError("Data integrity check failed!");
             NewGame();
         }
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
@@ -54,7 +62,6 @@ public class DataPersistenceManager : MonoBehaviour
         }
         Debug.Log("Save Gold = " + gameData.currentGold);
         dataHandler.Save(gameData);
-
     }
     private void OnApplicationQuit()
     {

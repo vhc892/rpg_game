@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +21,7 @@ public class NPC : Singleton<NPC>
     void Start()
     {
         dialogueText.text = "";
+
     }
 
     void Update()
@@ -36,13 +37,12 @@ public class NPC : Singleton<NPC>
             {
                 NextLine();
             }
-
         }
         if (Input.GetKeyDown(KeyCode.Q) && dialoguePanel.activeInHierarchy)
         {
             RemoveText();
         }
-        if(dialogueText.text == dialogue[index])
+        if (dialogueText.text == dialogue[index])
         {
             contButton.SetActive(true);
         }
@@ -77,7 +77,6 @@ public class NPC : Singleton<NPC>
         {
             RemoveText();
             DropGold();
-
         }
     }
 
@@ -97,6 +96,7 @@ public class NPC : Singleton<NPC>
             RemoveText();
         }
     }
+
     public void DropGold()
     {
         int RandomAmountOfGold = Random.Range(1, 5);

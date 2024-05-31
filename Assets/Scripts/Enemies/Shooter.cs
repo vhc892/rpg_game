@@ -108,7 +108,7 @@ public class Shooter : MonoBehaviour, IEnemy
         angleStep = 0;
         if (angleSpread != 0)
         {
-            angleStep = angleSpread / (projectilesPerBurst - 1);
+            angleStep = angleSpread / (projectilesPerBurst - 1);//angle between bullet
             halfAngleSpread = angleSpread / 2f;
             startAngle = targetAngle - halfAngleSpread;
             endAngle = targetAngle + halfAngleSpread;
