@@ -88,12 +88,11 @@ public class PlayerController : Singleton<PlayerController>, IDataPersistence
     {
         if (knockback.GettingKnockedBack || PlayerHealth.Instance.isDeath) { return; }
 
-        rb.MovePosition(rb.position + movement * (moveSpeed * Time.fixedDeltaTime));       
+        rb.MovePosition(rb.position + movement * (moveSpeed * Time.fixedDeltaTime));
     }
 
     private void AdjustPlayerFacingDirection()
     {
-        // mouse caculate in screen point so player have to change too
         Vector3 mousePos = Input.mousePosition;
         Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
 

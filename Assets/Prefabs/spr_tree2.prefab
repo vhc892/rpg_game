@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2750224418750549875}
   - component: {fileID: 7201252049426470318}
   - component: {fileID: 4058016694735894528}
+  - component: {fileID: -444115226360586951}
   - component: {fileID: -4259193658762366066}
   - component: {fileID: -4933951598698623403}
-  - component: {fileID: -4079604286820135187}
   m_Layer: 0
   m_Name: spr_tree2
   m_TagString: Untagged
@@ -123,6 +123,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0.011795347, y: 0.030550482}
   m_Size: {x: 0.70068085, y: 0.32845706}
   m_Direction: 1
+--- !u!114 &-444115226360586951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6482047564226443193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c253c2a828f7814b801973de3f168a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transparencyAmount: 0.8
+  fadeTime: 0.4
 --- !u!58 &-4259193658762366066
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -170,17 +184,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140a39cdeb37280448b5f21ef72e58ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-4079604286820135187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6482047564226443193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c253c2a828f7814b801973de3f168a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transparencyAmount: 0.8
-  fadeTime: 0.4

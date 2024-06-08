@@ -9,7 +9,7 @@ public class GameData
     public Vector3 playerPositon;
     public GameData()
     {
-        //this.currentGold = 0;
+        this.currentGold = 0;
         playerPositon = Vector3.zero;
     }
 }

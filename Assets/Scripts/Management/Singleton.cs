@@ -16,7 +16,6 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         {
             instance = (T)this;
         }
-        //check if gameobj have parent
         if (!gameObject.transform.parent)
         {
             DontDestroyOnLoad(gameObject);
