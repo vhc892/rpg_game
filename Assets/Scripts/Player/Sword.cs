@@ -36,8 +36,10 @@ public class Sword : MonoBehaviour, IWeapon
         weaponCollider.gameObject.SetActive(true);
         slashAnim = Instantiate(slashAnimPrefab, slashAnimSpawnPoint.position, Quaternion.identity);
         slashAnim.transform.parent = this.transform.parent;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.swingSword);
+
     }
-   
+
     public void DoneAttackingAnimEvent()
     {
         weaponCollider.gameObject.SetActive(false);

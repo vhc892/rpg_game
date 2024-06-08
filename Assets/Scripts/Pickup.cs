@@ -81,6 +81,7 @@ public class Pickup : MonoBehaviour
         {
             case PickUpType.GoldCoin:
                 EconomyManager.Instance.UpdateCurrentGold();
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.colectCoin);
                 Debug.Log("GoldCoin");
             break;
             case PickUpType.HealthGlobe:
