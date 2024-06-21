@@ -6,7 +6,8 @@ using TMPro;
 
 public class NPC : Singleton<NPC>
 {
-    [SerializeField] private GameObject goinCoin;
+    [SerializeField] private GameObject staminaGlobe;
+    [SerializeField] private GameObject healthGlobe;
 
     public GameObject dialoguePanel;
     public TextMeshProUGUI dialogueText;
@@ -76,7 +77,7 @@ public class NPC : Singleton<NPC>
         else
         {
             RemoveText();
-            DropGold();
+            DropItem();
 
         }
     }
@@ -97,12 +98,27 @@ public class NPC : Singleton<NPC>
             RemoveText();
         }
     }
-    public void DropGold()
+    public void DropItem()
     {
-        int RandomAmountOfGold = Random.Range(1, 5);
-        for (int i = 0; i < RandomAmountOfGold; i++)
+        int randomNum = Random.Range(1, 2);
+
+        
+        if (randomNum == 1)
         {
-            Instantiate(goinCoin, transform.position, Quaternion.identity);
+            int RandomAmountOfGold = Random.Range(1, 5);
+            for (int i = 0; i < RandomAmountOfGold; i++)
+            {
+                Instantiate(healthGlobe, transform.position, Quaternion.identity);
+            }
         }
+        if (randomNum == 2)
+        {
+            int RandomAmountOfGold = Random.Range(1, 5);
+            for (int i = 0; i < RandomAmountOfGold; i++)
+            {
+                Instantiate(healthGlobe, transform.position, Quaternion.identity);
+            }
+        }
+        EconomyManager.Instance.Buy();
     }
 }

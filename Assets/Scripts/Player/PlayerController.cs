@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : Singleton<PlayerController>, IDataPersistence
 {
@@ -62,8 +64,11 @@ public class PlayerController : Singleton<PlayerController>, IDataPersistence
     private void Update()
     {
         PlayerInput();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
-
 
     private void FixedUpdate()
     {
@@ -119,6 +124,7 @@ public class PlayerController : Singleton<PlayerController>, IDataPersistence
             StartCoroutine(EndDashRoutine());
         }
     }
+    
 
     private IEnumerator EndDashRoutine()
     {

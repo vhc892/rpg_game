@@ -11,7 +11,7 @@ public class EconomyManager : Singleton<EconomyManager>, IDataPersistence
 
     private void Start()
     {
-        UpdateCurrentGold();
+        UpdateGold();
     }
     public void LoadData(GameData data)
     {
@@ -31,4 +31,21 @@ public class EconomyManager : Singleton<EconomyManager>, IDataPersistence
         }
         goldText.text = currentGold.ToString("D3");
     }
+    public void UpdateGold()
+    {
+        if (goldText == null)
+        {
+            goldText = GameObject.Find(COIN_AMOUNT_TEXT).GetComponent<TMP_Text>();
+        }
+        goldText.text = currentGold.ToString("D3");
+    }
+    public void Buy()
+    {
+        if (currentGold > 2) {
+            currentGold = currentGold - 2;
+            UpdateGold();
+         }
+
+    }
+
 }
