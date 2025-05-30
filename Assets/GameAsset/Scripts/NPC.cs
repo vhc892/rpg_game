@@ -1,92 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField] private GameObject staminaGlobe;
-    [SerializeField] private GameObject healthGlobe;
+    private bool isPlayerInRange = false;
 
-    public GameObject dialoguePanel;
-    public TextMeshProUGUI dialogueText;
-    public string[] dialogue;
-    private int index = 0;
+    private PlayerControls playerControls;
 
-    public GameObject contButton;
-    public float wordSpeed;
-    public bool playerIsClose;
-
-
-    void Start()
+    private void Awake()
     {
-        dialogueText.text = "";
+        playerControls = new PlayerControls();
     }
 
-    void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.E) && playerIsClose)
-        {
-            if (!dialoguePanel.activeInHierarchy)
-            {
-                dialoguePanel.SetActive(true);
-                StartCoroutine(Typing());
-            }
-            else if (dialogueText.text == dialogue[index])
-            {
-                NextLine();
-            }
-
-        }
-        if (Input.GetKeyDown(KeyCode.Q) && dialoguePanel.activeInHierarchy)
-        {
-            RemoveText();
-        }
-        if(dialogueText.text == dialogue[index])
-        {
-            contButton.SetActive(true);
-        }
+        playerControls.Enable();
     }
 
-    public void RemoveText()
+    private void OnDisable()
     {
-        dialogueText.text = "";
-        index = 0;
-        dialoguePanel.SetActive(false);
-    }
-
-    IEnumerator Typing()
-    {
-        foreach (char letter in dialogue[index].ToCharArray())
-        {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(wordSpeed);
-        }
-    }
-
-    public void NextLine()
-    {
-        contButton.SetActive(false);
-        if (index < dialogue.Length - 1)
-        {
-            index++;
-            dialogueText.text = "";
-            StartCoroutine(Typing());
-        }
-        else
-        {
-            RemoveText();
-            DropItem();
-
-        }
+        playerControls.Disable();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            playerIsClose = true;
+            isPlayerInRange = true;
+
+            // Đăng ký sự kiện Interact khi người chơi vào vùng
+            playerControls.Combat.Interact.performed += OnInteractPerformed;
         }
     }
 
@@ -94,31 +37,24 @@ public class NPC : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerIsClose = false;
-            RemoveText();
+            isPlayerInRange = false;
+
+            // Gỡ sự kiện khi người chơi rời vùng
+            playerControls.Combat.Interact.performed -= OnInteractPerformed;
+
+            // Tắt panel nếu đang hiện
+            if (UIManager.Instance != null)
+                UIManager.Instance.upgradePanel.SetActive(false);
         }
     }
-    public void DropItem()
-    {
-        int randomNum = Random.Range(1, 2);
 
-        
-        if (randomNum == 1)
+    private void OnInteractPerformed(InputAction.CallbackContext context)
+    {
+        if (!isPlayerInRange) return;
+
+        if (UIManager.Instance != null && UIManager.Instance.upgradePanel != null)
         {
-            int RandomAmountOfGold = Random.Range(1, 5);
-            for (int i = 0; i < RandomAmountOfGold; i++)
-            {
-                Instantiate(healthGlobe, transform.position, Quaternion.identity);
-            }
+            UIManager.Instance.upgradePanel.SetActive(true);
         }
-        if (randomNum == 2)
-        {
-            int RandomAmountOfGold = Random.Range(1, 5);
-            for (int i = 0; i < RandomAmountOfGold; i++)
-            {
-                Instantiate(healthGlobe, transform.position, Quaternion.identity);
-            }
-        }
-        EconomyManager.Instance.Buy();
     }
 }

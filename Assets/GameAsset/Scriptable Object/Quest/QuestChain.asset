@@ -15,3 +15,5 @@ MonoBehaviour:
   questSequence:
   - {fileID: 11400000, guid: f5e0b9bae1df4f84eae075afee64cfe7, type: 2}
   - {fileID: 11400000, guid: 68c194a1c9804ca478ebd6da02bf2f8e, type: 2}
+  - {fileID: 11400000, guid: 1b76f9a13c960204bba9c31f180aead6, type: 2}
+  - {fileID: 11400000, guid: 7ada53786ac13714592e4e852edc424e, type: 2}

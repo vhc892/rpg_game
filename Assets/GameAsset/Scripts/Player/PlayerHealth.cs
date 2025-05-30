@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerHealth : Singleton<PlayerHealth>
 {
@@ -10,8 +10,10 @@ public class PlayerHealth : Singleton<PlayerHealth>
     [SerializeField] private int maxHealth = 3;
     [SerializeField] private float knockBackThrustAmount = 10f;
     [SerializeField] private float damageRecoveryTime = 1f;
+    [SerializeField] private TMP_Text healthText;
 
-    private Slider healthSlider;
+
+    public Slider healthSlider;
     private int currentHealth;
     private bool canTakeDamage = true;
     private Knockback knockback;
@@ -64,7 +66,6 @@ public class PlayerHealth : Singleton<PlayerHealth>
         if(currentHealth <= 0 && !isDeath)
         {
             isDeath=true;
-            Destroy(ActiveWeapon.Instance.gameObject);
             currentHealth = 0;
             GetComponent<Animator>().SetTrigger(DEATH_HASH);
             StartCoroutine(DeathLoadSceneRoutine());
@@ -74,8 +75,8 @@ public class PlayerHealth : Singleton<PlayerHealth>
     private IEnumerator DeathLoadSceneRoutine()
     {
         yield return new WaitForSeconds(2f);
-        Destroy(gameObject);
         LevelManager.Instance.LoadLevel(0);
+        Respawn();
     }
     private IEnumerator DamageRecoveryRoutine()
     {
@@ -84,11 +85,63 @@ public class PlayerHealth : Singleton<PlayerHealth>
     }
     private void UpdateHealthSlider()
     {
-        if(healthSlider == null)
-        {
-            healthSlider = GameObject.Find(HEALTH_SLIDER_TEXT).GetComponent<Slider>();
-        }
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
+
+        if (healthText != null)
+        {
+            healthText.text = $"{currentHealth} / {maxHealth}";
+        }
     }
+
+    public void Respawn()
+    {
+        ApplyHealthState(maxHealth);
+    }
+
+    private void ApplyHealthState(int healthValue)
+    {
+        currentHealth = Mathf.Clamp(healthValue, 0, maxHealth);
+        isDeath = false;
+        canTakeDamage = true;
+        UpdateHealthSlider();
+
+        Animator animator = GetComponent<Animator>();
+        animator.ResetTrigger(DEATH_HASH);
+        animator.Play("Idle");
+    }
+    public void IncreaseMaxHealth(int amount)
+    {
+        maxHealth += amount;
+        currentHealth += amount; 
+        UpdateHealthSlider();
+    }
+    public void Heal(int amount)
+    {
+        if (isDeath) return;
+
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        UpdateHealthSlider();
+    }
+
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public void SetHealth(int value)
+    {
+        ApplyHealthState(value);
+    }
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+    public void SetMaxHealth(int value)
+    {
+        maxHealth = value;
+        UpdateHealthSlider();
+    }
+
 }

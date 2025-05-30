@@ -4,22 +4,39 @@ using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
-    public GameObject dialoguePanel;
+    public GameObject upgradePanel;
     public GameObject questBlockerPanel;
     public GameObject settingPanel;
+    public GameObject notEnoughGoldPanel;
 
     private void Start()
     {
-        TurnOffSettingPanel();
+        TurnOffPanel();
     }
     public void TurnOnSettingPanel()
     {
         settingPanel.SetActive(true);
     }
-    public void TurnOffSettingPanel()
+    public void TurnOffPanel()
     {
         settingPanel.SetActive(false);
+        upgradePanel.SetActive(false);
+        notEnoughGoldPanel.SetActive(false);
+
     }
+    public void ShowNotEnoughGold()
+    {
+        StopAllCoroutines();
+        StartCoroutine(NotEnoughGoldRoutine());
+    }
+
+    private IEnumerator NotEnoughGoldRoutine()
+    {
+        notEnoughGoldPanel.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        notEnoughGoldPanel.SetActive(false);
+    }
+
     public void SaveButton()
     {
         SaveLoadManager.Instance.SaveGame();

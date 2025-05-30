@@ -11,6 +11,9 @@ public class GameData
 
     public string activeQuestID;
     public int activeQuestProgress;
+    public int playerHealth;
+    public int currentQuestIndex;
+    public int maxHealth;
 
     public List<string> completedQuestIDs = new List<string>();
 }

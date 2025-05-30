@@ -33,7 +33,11 @@ public class SaveLoadManager : MonoBehaviour
             currentLevelIndex = LevelManager.Instance.GetCurrentLevelIndex(),
             activeQuestID = QuestManager.Instance.GetActiveQuestID(),
             activeQuestProgress = QuestManager.Instance.GetCurrentProgress(),
-            completedQuestIDs = QuestManager.Instance.GetCompletedQuestIDs()
+            completedQuestIDs = QuestManager.Instance.GetCompletedQuestIDs(),
+            playerHealth = PlayerHealth.Instance.GetCurrentHealth(),
+            currentQuestIndex = QuestManager.Instance.GetCurrentQuestIndex(),
+            maxHealth = PlayerHealth.Instance.GetMaxHealth()
+
         };
 
         SaveSystem.Save(data);
@@ -45,15 +49,22 @@ public class SaveLoadManager : MonoBehaviour
         GameData data = SaveSystem.Load();
         if (data == null)
         {
-            Debug.LogWarning("No file save.");
+            Debug.LogWarning("❌ No saved data found.");
             return;
         }
 
         PlayerController.Instance.SetPosition(data.playerPosition);
         EconomyManager.Instance.SetGold(data.currentGold);
         LevelManager.Instance.SetCurrentLevelIndex(data.currentLevelIndex);
-        QuestManager.Instance.LoadQuestState(data.activeQuestID, data.activeQuestProgress);
-        QuestManager.Instance.LoadCompletedQuestList(data.completedQuestIDs);
+        PlayerHealth.Instance.SetMaxHealth(data.maxHealth);
+        PlayerHealth.Instance.SetHealth(data.playerHealth);
+
+        QuestManager.Instance.SetQuestStateFromSave(
+            data.currentQuestIndex,
+            data.activeQuestID,
+            data.activeQuestProgress,
+            data.completedQuestIDs
+        );
     }
 
     public bool SaveExists()

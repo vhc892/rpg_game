@@ -22704,6 +22704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelIndexToLoad: 2
   entranceID: FromLevel2
+  requiredQuestID: 1
 --- !u!1 &7652561748591727039
 GameObject:
   m_ObjectHideFlags: 0
@@ -24658,6 +24659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelIndexToLoad: 0
   entranceID: FromLevel2
+  requiredQuestID: 
 --- !u!1 &8062533191002884184
 GameObject:
   m_ObjectHideFlags: 0

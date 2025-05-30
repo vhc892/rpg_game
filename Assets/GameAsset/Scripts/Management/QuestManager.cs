@@ -6,12 +6,11 @@ public class QuestManager : MonoBehaviour
     public static QuestManager Instance { get; private set; }
 
     [Header("Quest Chain Setup")]
-    public QuestChainData questChain; 
+    public QuestChainData questChain;
 
     private int currentQuestIndex = 0;
     private QuestData activeQuest;
     private int currentCount = 0;
-
     private List<string> completedQuests = new List<string>();
 
     private void Awake()
@@ -21,32 +20,21 @@ public class QuestManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
     }
 
     private void Start()
     {
-        StartNextQuest();
-    }
-
-    private void StartNextQuest()
-    {
-        if (questChain == null || questChain.questSequence.Length == 0 || currentQuestIndex >= questChain.questSequence.Length)
+        if (SaveLoadManager.Instance != null && SaveLoadManager.Instance.isNewGame)
         {
-            Debug.Log("All quest completed");
-            activeQuest = null;
-            return;
+            StartNextQuest();
         }
-
-        activeQuest = questChain.questSequence[currentQuestIndex];
-        currentCount = 0;
-
-        GameEvents.RaiseQuestStarted(activeQuest);
     }
+
     public void RegisterEnemyKilled(Helper.EnemyType killedType)
     {
-        if (activeQuest == null || killedType != activeQuest.targetType) return;
+        if (activeQuest == null || killedType != activeQuest.targetType)
+            return;
 
         currentCount++;
         QuestUI.Instance.UpdateProgress(currentCount, activeQuest.requiredCount);
@@ -61,7 +49,6 @@ public class QuestManager : MonoBehaviour
     {
         if (activeQuest == null) return;
 
-        //complete quest
         if (!completedQuests.Contains(activeQuest.questID))
             completedQuests.Add(activeQuest.questID);
 
@@ -71,13 +58,23 @@ public class QuestManager : MonoBehaviour
         StartNextQuest();
     }
 
-    public bool IsQuestComplete(string questID)
+    private void StartNextQuest()
     {
-        return completedQuests.Contains(questID);
-    }
-    public QuestData GetActiveQuest() => activeQuest;
+        if (questChain == null || questChain.questSequence.Length == 0 || currentQuestIndex >= questChain.questSequence.Length)
+        {
+            Debug.Log("✅ All quests completed.");
+            activeQuest = null;
+            return;
+        }
 
-    //for save load
+        activeQuest = questChain.questSequence[currentQuestIndex];
+        currentCount = 0;
+
+        GameEvents.RaiseQuestStarted(activeQuest);
+        QuestUI.Instance.UpdateProgress(currentCount, activeQuest.requiredCount);
+    }
+
+    // === Getters for Save ===
     public string GetActiveQuestID()
     {
         return activeQuest != null ? activeQuest.questID : null;
@@ -93,7 +90,25 @@ public class QuestManager : MonoBehaviour
         return completedQuests;
     }
 
-    public void LoadQuestState(string questID, int progress)
+    public int GetCurrentQuestIndex()
+    {
+        return currentQuestIndex;
+    }
+
+    // === Load from Save ===
+    public void SetQuestStateFromSave(int index, string questID, int progress, List<string> completedList)
+    {
+        currentQuestIndex = Mathf.Clamp(index, 0, questChain.questSequence.Length - 1);
+        LoadCompletedQuestList(completedList);
+        LoadQuestState(questID, progress);
+    }
+
+    private void LoadCompletedQuestList(List<string> completedList)
+    {
+        completedQuests = completedList ?? new List<string>();
+    }
+
+    private void LoadQuestState(string questID, int progress)
     {
         foreach (var quest in questChain.questSequence)
         {
@@ -106,11 +121,17 @@ public class QuestManager : MonoBehaviour
                 return;
             }
         }
+
+        Debug.LogWarning("❌ Quest ID không khớp trong chuỗi.");
     }
 
-    public void LoadCompletedQuestList(List<string> completedList)
+    public bool IsQuestComplete(string questID)
     {
-        completedQuests = completedList ?? new List<string>();
+        return completedQuests.Contains(questID);
     }
 
+    public QuestData GetActiveQuest()
+    {
+        return activeQuest;
+    }
 }

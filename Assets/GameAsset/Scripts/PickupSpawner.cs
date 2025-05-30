@@ -5,25 +5,26 @@ using UnityEngine;
 public class PickupSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject goinCoin, healthGlobe, staminaGlobe;
-    
+
     public void DropItems()
     {
-        int randomNum = Random.Range(1,4);
+        Transform parentTransform = transform.parent; 
+        int randomNum = Random.Range(1, 4);
 
-        if(randomNum == 1)
+        if (randomNum == 1)
         {
-            Instantiate(staminaGlobe, transform.position, Quaternion.identity);
+            GameObject item = Instantiate(staminaGlobe, transform.position, Quaternion.identity, parentTransform);
         }
-        if (randomNum == 2)
+        else if (randomNum == 2)
         {
-            Instantiate(healthGlobe, transform.position, Quaternion.identity);
+            GameObject item = Instantiate(healthGlobe, transform.position, Quaternion.identity, parentTransform);
         }
-        if(randomNum == 3)
+        else if (randomNum == 3)
         {
-            int RandomAmountOfGold = Random.Range(1,5);
-            for(int i = 0; i < RandomAmountOfGold; i++)
+            int RandomAmountOfGold = Random.Range(1, 5);
+            for (int i = 0; i < RandomAmountOfGold; i++)
             {
-                Instantiate(goinCoin, transform.position, Quaternion.identity);
+                GameObject coin = Instantiate(goinCoin, transform.position, Quaternion.identity, parentTransform);
             }
         }
     }

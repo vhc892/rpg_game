@@ -33,13 +33,35 @@ public class EconomyManager : Singleton<EconomyManager>
         currentGold += amount;
         UpdateGold();
     }
-    public void Buy()
+    public void BuyIncreaseMaxHealth()
     {
-        if (currentGold > 2) {
-            currentGold = currentGold - 2;
+        if (currentGold >= 10)
+        {
+            currentGold -= 10;
+            PlayerHealth.Instance.IncreaseMaxHealth(5);
             UpdateGold();
-         }
+        }
+        else
+        {
+            UIManager.Instance.ShowNotEnoughGold();
+        }
     }
+
+    public void BuyHeal()
+    {
+        if (currentGold >= 5)
+        {
+            currentGold -= 5;
+            PlayerHealth.Instance.Heal(5);
+            UpdateGold();
+        }
+        else
+        {
+            UIManager.Instance.ShowNotEnoughGold();
+        }
+    }
+
+
     public int GetGold()
     {
         return currentGold;
