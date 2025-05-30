@@ -7,4 +7,5 @@ public class QuestData : ScriptableObject
     public string questTitle;
     public EnemyType targetType;
     public int requiredCount;
+    public int goldReward;
 }

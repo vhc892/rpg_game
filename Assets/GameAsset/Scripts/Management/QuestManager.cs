@@ -1,41 +1,54 @@
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Helper;
 
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
 
-    [Header("Config")]
-    public QuestData startingQuest;
+    [Header("Quest Chain Setup")]
+    public QuestChainData questChain; 
 
+    private int currentQuestIndex = 0;
     private QuestData activeQuest;
     private int currentCount = 0;
 
+    private List<string> completedQuests = new List<string>();
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
     }
 
     private void Start()
     {
-        StartQuest(startingQuest);
+        StartNextQuest();
     }
 
-    public void StartQuest(QuestData quest)
+    private void StartNextQuest()
     {
-        activeQuest = quest;
+        if (questChain == null || questChain.questSequence.Length == 0 || currentQuestIndex >= questChain.questSequence.Length)
+        {
+            Debug.Log("All quest completed");
+            activeQuest = null;
+            return;
+        }
+
+        activeQuest = questChain.questSequence[currentQuestIndex];
         currentCount = 0;
 
-        GameEvents.RaiseQuestStarted(quest);
+        GameEvents.RaiseQuestStarted(activeQuest);
     }
-
-    public void RegisterEnemyKilled(EnemyType killedType)
+    public void RegisterEnemyKilled(Helper.EnemyType killedType)
     {
         if (activeQuest == null || killedType != activeQuest.targetType) return;
 
         currentCount++;
-        GameEvents.OnQuestStarted?.Invoke(activeQuest);
-
         QuestUI.Instance.UpdateProgress(currentCount, activeQuest.requiredCount);
 
         if (currentCount >= activeQuest.requiredCount)
@@ -43,9 +56,24 @@ public class QuestManager : MonoBehaviour
             GameEvents.RaiseQuestCompleted(activeQuest);
         }
     }
-    public bool IsQuestComplete(string questID)
+
+    public void CollectQuestReward()
     {
-        return activeQuest != null && activeQuest.questID == questID && currentCount >= activeQuest.requiredCount;
+        if (activeQuest == null) return;
+
+        //complete quest
+        if (!completedQuests.Contains(activeQuest.questID))
+            completedQuests.Add(activeQuest.questID);
+
+        EconomyManager.Instance.AddGold(activeQuest.goldReward);
+
+        currentQuestIndex++;
+        StartNextQuest();
     }
 
+    public bool IsQuestComplete(string questID)
+    {
+        return completedQuests.Contains(questID);
+    }
+    public QuestData GetActiveQuest() => activeQuest;
 }

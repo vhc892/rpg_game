@@ -7017,7 +7017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelIndexToLoad: 1
   entranceID: FromLevel1
-  requiredQuestID: 1
+  requiredQuestID: 0
 --- !u!1 &5349346959532765577
 GameObject:
   m_ObjectHideFlags: 0

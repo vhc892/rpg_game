@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 public class EconomyManager : Singleton<EconomyManager>
 {
-    private TMP_Text goldText;
+    public TMP_Text goldText;
     private int currentGold;
 
     const string COIN_AMOUNT_TEXT = "GoldAmountText";
@@ -14,22 +14,24 @@ public class EconomyManager : Singleton<EconomyManager>
         UpdateGold();
     }
    
+    //pick up
     public void UpdateCurrentGold()
     {
         currentGold += 1;
-        if(goldText == null)
-        {
-            goldText = GameObject.Find(COIN_AMOUNT_TEXT).GetComponent<TMP_Text>();
-        }
+        //if(goldText == null)
+        //{
+        //    goldText = GameObject.Find(COIN_AMOUNT_TEXT).GetComponent<TMP_Text>();
+        //}
         goldText.text = currentGold.ToString("D3");
     }
     public void UpdateGold()
     {
-        if (goldText == null)
-        {
-            goldText = GameObject.Find(COIN_AMOUNT_TEXT).GetComponent<TMP_Text>();
-        }
         goldText.text = currentGold.ToString("D3");
+    }
+    public void AddGold(int amount)
+    {
+        currentGold += amount;
+        UpdateGold();
     }
     public void Buy()
     {
@@ -37,7 +39,6 @@ public class EconomyManager : Singleton<EconomyManager>
             currentGold = currentGold - 2;
             UpdateGold();
          }
-
     }
 
 }

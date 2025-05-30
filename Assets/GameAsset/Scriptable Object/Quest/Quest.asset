@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f76d6e3950294a4785e5fbc1ed8edfc, type: 3}
   m_Name: Quest
   m_EditorClassIdentifier: 
-  questID: 1
-  questTitle: Kill 5 Slime
+  questID: 0
+  questTitle: Kill 4 Slime
   targetType: 0
-  requiredCount: 5
+  requiredCount: 4
+  goldReward: 2
