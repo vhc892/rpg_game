@@ -40,5 +40,16 @@ public class EconomyManager : Singleton<EconomyManager>
             UpdateGold();
          }
     }
+    public int GetGold()
+    {
+        return currentGold;
+    }
+
+    public void SetGold(int amount)
+    {
+        currentGold = amount;
+        UpdateGold();
+    }
+
 
 }

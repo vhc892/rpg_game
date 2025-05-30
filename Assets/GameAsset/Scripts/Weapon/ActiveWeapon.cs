@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ActiveWeapon : Singleton<ActiveWeapon>
 {
@@ -53,6 +54,8 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     }
     private void StartAttacking()
     {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
         attackButtonDown = true;
     }
     private void StopAttacking()

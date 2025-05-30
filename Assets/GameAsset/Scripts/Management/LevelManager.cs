@@ -12,6 +12,15 @@ public class LevelManager : Singleton<LevelManager>
 
     private void Start()
     {
+        if (SaveLoadManager.Instance.isNewGame)
+        {
+            Debug.Log("New game");
+        }
+        else
+        {
+            Debug.Log("Continue");
+            SaveLoadManager.Instance.LoadGame();
+        }
         LoadLevel(currentLevelIndex);
     }
 
@@ -62,11 +71,14 @@ public class LevelManager : Singleton<LevelManager>
     {
         return currentLevelIndex;
     }
-
-    public GameObject GetCurrentLevelInstance()
+    public void SetCurrentLevelIndex(int index)
     {
-        return currentLevelInstance;
+        currentLevelIndex = index;
     }
+    //public GameObject GetCurrentLevelInstance()
+    //{
+    //    return currentLevelInstance;
+    //}
 
     public void SetNextEntranceID(string id)
     {

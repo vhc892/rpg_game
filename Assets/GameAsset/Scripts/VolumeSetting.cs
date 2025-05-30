@@ -8,21 +8,10 @@ public class VolumeSetting : MonoBehaviour
     [SerializeField] private AudioMixer myMixer;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider SFXSlider;
-    [SerializeField] private GameObject setting;
-
-    private bool isSettingsVisible = false;
 
     private void Start()
     {
         SetMusicVolume();
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            isSettingsVisible = !isSettingsVisible;
-            setting.SetActive(isSettingsVisible);
-        }
     }
     public void SetMusicVolume()
     {

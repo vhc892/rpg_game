@@ -58,11 +58,12 @@ public class QuestUI : MonoBehaviour
 
     public void UpdateProgress(int current, int total)
     {
-        if (!isQuestComplete)
+        if (currentQuest != null && !isQuestComplete)
         {
             questText.text = $"{currentQuest.questTitle}: {current} / {total}";
         }
     }
+
 
     private void OnQuestCompleted(QuestData quest)
     {

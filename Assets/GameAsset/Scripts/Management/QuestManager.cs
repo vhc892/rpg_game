@@ -76,4 +76,41 @@ public class QuestManager : MonoBehaviour
         return completedQuests.Contains(questID);
     }
     public QuestData GetActiveQuest() => activeQuest;
+
+    //for save load
+    public string GetActiveQuestID()
+    {
+        return activeQuest != null ? activeQuest.questID : null;
+    }
+
+    public int GetCurrentProgress()
+    {
+        return currentCount;
+    }
+
+    public List<string> GetCompletedQuestIDs()
+    {
+        return completedQuests;
+    }
+
+    public void LoadQuestState(string questID, int progress)
+    {
+        foreach (var quest in questChain.questSequence)
+        {
+            if (quest.questID == questID)
+            {
+                activeQuest = quest;
+                currentCount = progress;
+                GameEvents.RaiseQuestStarted(activeQuest);
+                QuestUI.Instance.UpdateProgress(currentCount, activeQuest.requiredCount);
+                return;
+            }
+        }
+    }
+
+    public void LoadCompletedQuestList(List<string> completedList)
+    {
+        completedQuests = completedList ?? new List<string>();
+    }
+
 }
