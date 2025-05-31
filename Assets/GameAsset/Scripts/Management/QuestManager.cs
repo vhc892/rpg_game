@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class QuestManager : MonoBehaviour
 {
@@ -63,7 +64,8 @@ public class QuestManager : MonoBehaviour
         if (questChain == null || questChain.questSequence.Length == 0 || currentQuestIndex >= questChain.questSequence.Length)
         {
             Debug.Log("✅ All quests completed.");
-            activeQuest = null;
+            //activeQuest = null;
+            SceneManager.LoadScene(3);
             return;
         }
 
@@ -134,4 +136,14 @@ public class QuestManager : MonoBehaviour
     {
         return activeQuest;
     }
+    public QuestData GetQuestByID(string id)
+    {
+        foreach (var quest in questChain.questSequence)
+        {
+            if (quest.questID == id)
+                return quest;
+        }
+        return null;
+    }
+
 }

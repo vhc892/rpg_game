@@ -18,8 +18,15 @@ public class AreaExit : MonoBehaviour
 
         // check quest complete
         if (!string.IsNullOrEmpty(requiredQuestID) &&
-            !QuestManager.Instance.IsQuestComplete(requiredQuestID))
+    !       QuestManager.Instance.IsQuestComplete(requiredQuestID))
         {
+            var questData = QuestManager.Instance.GetQuestByID(requiredQuestID);
+
+            if (questData != null && UIManager.Instance.questBlockerText != null)
+            {
+                UIManager.Instance.questBlockerText.text = $"{questData.questTitle} to unlock this area";
+            }
+
             UIManager.Instance.questBlockerPanel.SetActive(true);
             return;
         }

@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 
 public static class SaveSystem
@@ -27,5 +27,12 @@ public static class SaveSystem
     {
         return File.Exists(Path.Combine(Application.persistentDataPath, "save.json"));
     }
-
+    public static void DeleteSave()
+    {
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+            Debug.Log("Save file deleted.");
+        }
+    }
 }

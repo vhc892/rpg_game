@@ -35,9 +35,9 @@ public class EconomyManager : Singleton<EconomyManager>
     }
     public void BuyIncreaseMaxHealth()
     {
-        if (currentGold >= 10)
+        if (currentGold >= 8)
         {
-            currentGold -= 10;
+            currentGold -= 8;
             PlayerHealth.Instance.IncreaseMaxHealth(5);
             UpdateGold();
         }

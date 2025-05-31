@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class UIManager : Singleton<UIManager>
 {
@@ -8,6 +11,8 @@ public class UIManager : Singleton<UIManager>
     public GameObject questBlockerPanel;
     public GameObject settingPanel;
     public GameObject notEnoughGoldPanel;
+
+    public TMP_Text questBlockerText;
 
     private void Start()
     {
@@ -22,7 +27,7 @@ public class UIManager : Singleton<UIManager>
         settingPanel.SetActive(false);
         upgradePanel.SetActive(false);
         notEnoughGoldPanel.SetActive(false);
-
+        questBlockerPanel.SetActive(false);
     }
     public void ShowNotEnoughGold()
     {
@@ -40,5 +45,10 @@ public class UIManager : Singleton<UIManager>
     public void SaveButton()
     {
         SaveLoadManager.Instance.SaveGame();
+    }
+    public void HomeButton()
+    {
+        SceneManager.LoadScene(0);
+        SaveButton();
     }
 }

@@ -12,6 +12,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnNewGame()
     {
+        SaveSystem.DeleteSave();
         SaveLoadManager.Instance.isNewGame = true;
         SceneManager.LoadScene(1);
     }
@@ -21,7 +22,7 @@ public class MainMenuUI : MonoBehaviour
         if (SaveLoadManager.Instance.SaveExists())
         {
             SaveLoadManager.Instance.isNewGame = false;
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
         else
         {
