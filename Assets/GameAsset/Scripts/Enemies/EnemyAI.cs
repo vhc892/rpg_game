@@ -71,6 +71,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (Vector2.Distance(transform.position, PlayerController.Instance.transform.position) > attackRange)
         {
+            Debug.Log("change to roaming");
             state = State.Roaming;
         }
 

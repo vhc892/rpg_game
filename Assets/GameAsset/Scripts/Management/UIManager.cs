@@ -21,7 +21,14 @@ public class UIManager : Singleton<UIManager>
     public void TurnOnSettingPanel()
     {
         settingPanel.SetActive(true);
+        Time.timeScale = 0f;
     }
+    public void TurnOffSettingPanel()
+    {
+        settingPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
     public void TurnOffPanel()
     {
         settingPanel.SetActive(false);
@@ -46,9 +53,15 @@ public class UIManager : Singleton<UIManager>
     {
         SaveLoadManager.Instance.SaveGame();
     }
-    public void HomeButton()
+    public void HomeAndSaveButton()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
         SaveButton();
+    }
+    public void HomeButton()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
     }
 }

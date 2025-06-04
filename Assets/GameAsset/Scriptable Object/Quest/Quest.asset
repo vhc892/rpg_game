@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quest
   m_EditorClassIdentifier: 
   questID: 0
-  questTitle: Kill 4 Slime
+  questTitle: Kill 2 Slime
   targetType: 0
-  requiredCount: 4
+  requiredCount: 2
   goldReward: 2

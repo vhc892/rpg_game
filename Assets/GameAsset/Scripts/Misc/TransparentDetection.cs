@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class NewBehaviourScript : MonoBehaviour
+public class TransparentDetection : MonoBehaviour
 {
     [Range(0f, 1f)]
     [SerializeField] private float transparencyAmount = 0.8f;
@@ -11,6 +11,8 @@ public class NewBehaviourScript : MonoBehaviour
     
     private SpriteRenderer spriteRenderer;
     private Tilemap tilemap;
+    private bool isBeingDestroyed = false;
+
 
     private void Awake()
     {
@@ -19,6 +21,7 @@ public class NewBehaviourScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!isActiveAndEnabled) return;
         if (other.gameObject.GetComponent<PlayerController>())
         {
             if (spriteRenderer)
@@ -33,6 +36,7 @@ public class NewBehaviourScript : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (isBeingDestroyed) return;
         if (other.gameObject.GetComponent<PlayerController>())
         {
             if (spriteRenderer)
@@ -66,5 +70,20 @@ public class NewBehaviourScript : MonoBehaviour
             tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, newAlpha);
             yield return null;
         }
+    }
+    private void OnEnable()
+    {
+        GameEvents.OnLevelLoaded += HandleLevelLoaded;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnLevelLoaded -= HandleLevelLoaded;
+    }
+
+    private void HandleLevelLoaded()
+    {
+        isBeingDestroyed = true;
+        StopAllCoroutines();
     }
 }

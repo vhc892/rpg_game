@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: 4911625309356994842}
   - component: {fileID: 4260986482069045144}
   - component: {fileID: 812486883492725860}
-  - component: {fileID: 2023478408663178244}
   - component: {fileID: 87351435791064516}
+  - component: {fileID: 3271907106295172281}
   m_Layer: 0
   m_Name: BlueSlime
   m_TagString: Untagged
@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamChangeDirFloat: 2
-  attackRange: 5
-  enemyType: {fileID: 2023478408663178244}
+  attackRange: 3
+  enemyType: {fileID: 3271907106295172281}
   attackCooldown: 2
   stopMovingWhileAttacking: 0
 --- !u!114 &353408080389737198
@@ -222,6 +222,7 @@ MonoBehaviour:
   startingHealth: 3
   deathVFXPrefab: {fileID: 1367351114251052912, guid: 092d587dbf8b9ab469df7d1c2923a6d8, type: 3}
   knockBackThrust: 15
+  enemyType: 0
 --- !u!114 &4260986482069045144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,28 +250,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whiteFlashMat: {fileID: 2100000, guid: f672c92e6c15b7b418b1fdd25130b904, type: 2}
   restoreDefaultMatTime: 0.2
---- !u!114 &2023478408663178244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6335693706878797276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16f73a451e0a90b4cbc4592c5c95de18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6369122933113226452, guid: 57194a4f66ed01d44af866ce9f8cbedc, type: 3}
-  bulletMoveSpeed: 0.1
-  burstCount: 0
-  projectilesPerBurst: 0
-  angleSpread: 47
-  startingDistance: 0.1
-  timeBetweenBursts: 0.1
-  restTime: 1
-  stagger: 0
-  oscillate: 0
 --- !u!114 &87351435791064516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,3 +265,16 @@ MonoBehaviour:
   goinCoin: {fileID: 8650944468358036923, guid: d8d3626b4a5bc704487fca1e26b98f2d, type: 3}
   healthGlobe: {fileID: 8650944468358036923, guid: 91219aaf7ba7b68459849e63df915cb0, type: 3}
   staminaGlobe: {fileID: 8650944468358036923, guid: 4e6beaa0f997ccb48808444f1a81d044, type: 3}
+--- !u!114 &3271907106295172281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6335693706878797276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea1a7948acb6054e9dee2649a9f4537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashDuration: 0.3

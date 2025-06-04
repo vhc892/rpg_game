@@ -6,4 +6,9 @@ namespace Helper
         Ghost,
         Grape
     }
+    public enum GameMode
+    {
+        MainGame,
+        Survival
+    }
 }

@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameAsset/Scenes/CutSceneEnd.unity
     guid: 3bde5cb5a2ca70640ad6a9db0819c576
+  - enabled: 1
+    path: Assets/GameAsset/Scenes/SurvivalScene.unity
+    guid: 00d1d6983aa6fc64e9aa66a34ff71c82
   m_configObjects: {}

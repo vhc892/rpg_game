@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using Helper;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -14,14 +15,20 @@ public class MainMenuUI : MonoBehaviour
     {
         SaveSystem.DeleteSave();
         SaveLoadManager.Instance.isNewGame = true;
+        GameModeManager.Instance.SetGameMode(GameMode.MainGame);
         SceneManager.LoadScene(1);
     }
-
+    public void OnSurvivalMode()
+    {
+        GameModeManager.Instance.SetGameMode(GameMode.Survival);
+        SceneManager.LoadScene(4);
+    }
     public void OnContinue()
     {
         if (SaveLoadManager.Instance.SaveExists())
         {
             SaveLoadManager.Instance.isNewGame = false;
+            GameModeManager.Instance.SetGameMode(GameMode.MainGame);
             SceneManager.LoadScene(2);
         }
         else

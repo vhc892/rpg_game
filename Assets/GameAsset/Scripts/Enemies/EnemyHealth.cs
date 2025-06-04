@@ -45,12 +45,24 @@ public class EnemyHealth : MonoBehaviour
         {
             Instantiate(deathVFXPrefab, transform.position, Quaternion.identity);
             GetComponent<PickupSpawner>().DropItems();
-            Die();
+
+            if (GameModeManager.Instance.CurrentMode == GameMode.MainGame)
+            {
+                QuestManager.Instance.RegisterEnemyKilled(enemyType);
+            }
+            else if (GameModeManager.Instance.CurrentMode == GameMode.Survival)
+            {
+                GameEvents.RaiseEnemyKilledSurvival();
+            }
+
+            Destroy(gameObject);
         }
     }
-    private void Die()
-    {
-        QuestManager.Instance.RegisterEnemyKilled(enemyType);
-        Destroy(gameObject);
-    }
+
+
+    //private void Die()
+    //{
+    //    QuestManager.Instance.RegisterEnemyKilled(enemyType);
+    //    Destroy(gameObject);
+    //}
 }

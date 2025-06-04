@@ -26,6 +26,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void LoadLevel(int levelIndex)
     {
+        GameEvents.RaiseLevelLoaded();
         if (levelIndex < 0 || levelIndex >= levelPrefabs.Length)
         {
             Debug.LogWarning("Level index out of range!");

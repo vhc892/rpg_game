@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quest 2
   m_EditorClassIdentifier: 
   questID: 2
-  questTitle: Kill 4 Grape
+  questTitle: Kill 1 Grape
   targetType: 2
-  requiredCount: 4
+  requiredCount: 1
   goldReward: 4
