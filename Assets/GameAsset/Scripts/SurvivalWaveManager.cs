@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
+using DG.Tweening;
 
-public class SurvivalWaveManager : MonoBehaviour
+public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
 {
     [System.Serializable]
     public class Wave
@@ -27,6 +28,13 @@ public class SurvivalWaveManager : MonoBehaviour
 
     [Title("UI")]
     [SerializeField] private TextMeshProUGUI waveCountdownText;
+    [SerializeField] private TextMeshProUGUI waveCompleteText;
+    [SerializeField] private RectTransform goldUI;
+    [SerializeField] private RectTransform[] coinRewardUI;
+    [SerializeField] private float coinFlyDuration = 0.75f;
+    [SerializeField] private float waveCompleteTextDuration = 1.5f;
+    [SerializeField] private TextMeshProUGUI highestWaveText;
+    public GameObject playerDeathUI;
 
     private int currentWaveIndex = 0;
     private int enemiesKilled = 0;
@@ -45,6 +53,7 @@ public class SurvivalWaveManager : MonoBehaviour
 
     private void Start()
     {
+        UpdateHighestWaveUI();
         StartCoroutine(StartNextWave());
     }
 
@@ -54,9 +63,62 @@ public class SurvivalWaveManager : MonoBehaviour
         if (enemiesKilled >= totalEnemiesThisWave && !waitingForContinue)
         {
             waitingForContinue = true;
-            UIManager.Instance.upgradePanel.SetActive(true);
+            ShowWaveCompleteUI();
         }
     }
+    private void ShowWaveCompleteUI()
+    {
+        if (waveCompleteText != null)
+        {
+            waveCompleteText.gameObject.SetActive(true);
+            waveCompleteText.DOFade(1f, 0.25f).From(0f);
+            waveCompleteText.transform.DOScale(Vector3.one, 0.3f).From(Vector3.zero).SetEase(Ease.OutBack);
+        }
+
+        StartCoroutine(PlayCoinRewardEffect());
+    }
+    private IEnumerator PlayCoinRewardEffect()
+    {
+        List<Vector2> originalAnchors = new List<Vector2>();
+
+        for (int i = 0; i < coinRewardUI.Length; i++)
+        {
+            RectTransform coin = coinRewardUI[i];
+            if (coin == null) continue;
+
+            Vector2 originalPos = coin.anchoredPosition;
+            coin.gameObject.SetActive(true);
+            coin.localScale = Vector3.one;
+
+            coin.DOMove(goldUI.position, coinFlyDuration)
+                .SetEase(Ease.InQuad)
+                .OnComplete(() =>
+                {
+                    coin.gameObject.SetActive(false);
+                    coin.anchoredPosition = originalPos;
+                    coin.localScale = Vector3.one;
+                    EconomyManager.Instance.AddGold(1);
+                });
+
+            coin.DOScale(0.5f, coinFlyDuration).SetEase(Ease.InSine);
+
+            yield return new WaitForSeconds(0.25f);//delay between coin
+        }
+
+        yield return new WaitForSeconds(coinFlyDuration + 0.2f);
+
+        // hide waveCompleteText
+        if (waveCompleteText != null)
+        {
+            waveCompleteText.DOFade(0f, 0.3f);
+            waveCompleteText.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+            {
+                waveCompleteText.gameObject.SetActive(false);
+            });
+        }
+        UIManager.Instance.upgradePanel.gameObject.SetActive(true);
+    }
+
     public void OnContinueButtonPressed()
     {
         UIManager.Instance.upgradePanel.SetActive(false);
@@ -70,7 +132,14 @@ public class SurvivalWaveManager : MonoBehaviour
             Debug.Log("All waves completed!");
             yield break;
         }
-
+        //hightest wave
+        int savedHighest = PlayerPrefs.GetInt("HighestWave", 0);
+        if (currentWaveIndex + 1 > savedHighest)
+        {
+            PlayerPrefs.SetInt("HighestWave", currentWaveIndex + 1);
+            PlayerPrefs.Save();
+            UpdateHighestWaveUI();
+        }
         // Countdown UI
         if (waveCountdownText != null)
         {
@@ -100,5 +169,13 @@ public class SurvivalWaveManager : MonoBehaviour
 
         Debug.Log($"Wave {currentWaveIndex + 1} started.");
         currentWaveIndex++;
+    }
+    private void UpdateHighestWaveUI()
+    {
+        if (highestWaveText != null)
+        {
+            int highest = PlayerPrefs.GetInt("HighestWave", 0);
+            highestWaveText.text = $"Highest Wave: {highest}";
+        }
     }
 }

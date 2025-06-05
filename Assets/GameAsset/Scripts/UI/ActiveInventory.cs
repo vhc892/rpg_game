@@ -15,12 +15,27 @@ public class ActiveInventory : Singleton<ActiveInventory>
     }
     private void Start()
     {
-        playerControls.Inventory.Keyboard.performed += ctx => ToggleActiveSlot((int)ctx.ReadValue<float>());
+        //playerControls.Inventory.Keyboard.performed += ctx => ToggleActiveSlot((int)ctx.ReadValue<float>());
+        playerControls.Inventory.Keyboard.performed += OnInventoryInput;
     }
     private void OnEnable()
     {
         playerControls.Enable();
     }
+    private void OnDisable()
+    {
+        playerControls.Disable();
+        playerControls.Inventory.Keyboard.performed -= OnInventoryInput;
+    }
+    private void OnDestroy()
+    {
+        playerControls.Inventory.Keyboard.performed -= OnInventoryInput;
+    }
+    private void OnInventoryInput(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        ToggleActiveSlot((int)ctx.ReadValue<float>());
+    }
+
     public void EquipStartingWeapon()
     {
         ToggleActiveHighlight(0);

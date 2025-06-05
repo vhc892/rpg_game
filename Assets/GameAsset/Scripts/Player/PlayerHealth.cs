@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Helper;
 
 public class PlayerHealth : Singleton<PlayerHealth>
 {
@@ -67,11 +68,32 @@ public class PlayerHealth : Singleton<PlayerHealth>
         {
             isDeath=true;
             currentHealth = 0;
+            UpdateHealthSlider();
             GetComponent<Animator>().SetTrigger(DEATH_HASH);
-            StartCoroutine(DeathLoadSceneRoutine());
-            Debug.Log("Player Death");
+            if (GameModeManager.Instance.CurrentMode == GameMode.MainGame)
+            {
+                GetComponent<Animator>().SetTrigger(DEATH_HASH);
+                StartCoroutine(DeathLoadSceneRoutine());
+                Debug.Log("Player Death - MainGame");
+            }
+            else if (GameModeManager.Instance.CurrentMode == GameMode.Survival)
+            {
+                Debug.Log("Player Death - Survival");
+                StartCoroutine(ShowSurvivalDeathUIRoutine());
+            }
         }
     }
+    private IEnumerator ShowSurvivalDeathUIRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        if (SurvivalWaveManager.Instance != null && SurvivalWaveManager.Instance.playerDeathUI != null)
+        {
+            SurvivalWaveManager.Instance.playerDeathUI.SetActive(true);
+            Time.timeScale = 0f;
+        }
+    }
+
     private IEnumerator DeathLoadSceneRoutine()
     {
         yield return new WaitForSeconds(2f);

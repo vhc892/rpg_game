@@ -1,6 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Helper;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -53,18 +54,26 @@ public class EnemyAI : MonoBehaviour
     }
     private void Roaming()
     {
-        timeRoaming += Time.deltaTime;
+        if (GameModeManager.Instance.CurrentMode == GameMode.Survival)
+        {
+            Vector2 dirToPlayer = (PlayerController.Instance.transform.position - transform.position).normalized;
+            enemyPathfinding.MoveTo(dirToPlayer);
+        }
+        else
+        {
+            //MainGame random roaming
+            timeRoaming += Time.deltaTime;
+            enemyPathfinding.MoveTo(roamPosition);
 
-        enemyPathfinding.MoveTo(roamPosition);
+            if (timeRoaming > roamChangeDirFloat)
+            {
+                roamPosition = GetRoamingPosition();
+            }
+        }
 
         if (Vector2.Distance(transform.position, PlayerController.Instance.transform.position) < attackRange)
         {
             state = State.Attacking;
-        }
-
-        if (timeRoaming > roamChangeDirFloat)
-        {
-            roamPosition = GetRoamingPosition();
         }
     }
     private void Attacking()

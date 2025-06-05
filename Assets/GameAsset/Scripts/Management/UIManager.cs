@@ -64,4 +64,9 @@ public class UIManager : Singleton<UIManager>
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
+    public void RestartSurvivalMode()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(4);
+    }
 }
