@@ -37,7 +37,7 @@ public class PlayerHealth : Singleton<PlayerHealth>
     private void OnCollisionStay2D(Collision2D other)
     {
         EnemyAI enemy = other.gameObject.GetComponent<EnemyAI>();
-        if(enemy)
+        if(enemy && other.gameObject.GetComponent<Goblin>() == null)
         {
             TakeDamage(1, other.transform);
         }

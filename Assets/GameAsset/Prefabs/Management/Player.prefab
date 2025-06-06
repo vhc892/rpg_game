@@ -209,6 +209,8 @@ MonoBehaviour:
   maxHealth: 3
   knockBackThrustAmount: 10
   damageRecoveryTime: 1
+  healthText: {fileID: 0}
+  healthSlider: {fileID: 0}
 --- !u!114 &207100004541605804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c879a94c7726616448f45baf23e7db94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fullStaminaImage: {fileID: 0}
+  emptyStaminaImage: {fileID: 0}
+  timeBetweenStaminaRefresh: 3
 --- !u!1 &5095649576517049645
 GameObject:
   m_ObjectHideFlags: 0

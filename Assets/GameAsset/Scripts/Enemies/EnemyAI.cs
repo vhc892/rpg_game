@@ -32,6 +32,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void Start()
     {
+        Debug.Log("stopMovingWhileAttacking = " + stopMovingWhileAttacking);
         roamPosition = GetRoamingPosition();
     }
     private void Update()
@@ -94,10 +95,10 @@ public class EnemyAI : MonoBehaviour
             {
                 enemyPathfinding.StopMoving();
             }
-            else
-            {
-                enemyPathfinding.MoveTo(roamPosition);
-            }
+            //else
+            //{
+            //    enemyPathfinding.MoveTo(roamPosition);
+            //}
 
             StartCoroutine(AttackCooldownRoutine());
         }
