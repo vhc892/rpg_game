@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shooter : MonoBehaviour, IEnemy
 {
@@ -17,7 +18,12 @@ public class Shooter : MonoBehaviour, IEnemy
     [SerializeField] private bool oscillate;
 
     private bool isShooting = false;
+    private Animator animator;
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     private void OnValidate()
     {
         if (oscillate) { stagger = true; }
@@ -36,6 +42,10 @@ public class Shooter : MonoBehaviour, IEnemy
         if (!isShooting)
         {
             StartCoroutine(ShootRoutine());
+        }
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
         }
     }
 
@@ -124,5 +134,14 @@ public class Shooter : MonoBehaviour, IEnemy
         Vector2 pos = new Vector2(x, y);
 
         return pos;
+    }
+    public void SetStagger(bool value) => stagger = value;
+    public void SetOscillate(bool value) => oscillate = value;
+
+    public void SetBurst(int burst, int perBurst, float spread)
+    {
+        burstCount = burst;
+        projectilesPerBurst = perBurst;
+        angleSpread = spread;
     }
 }

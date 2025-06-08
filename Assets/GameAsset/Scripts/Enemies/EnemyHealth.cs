@@ -58,6 +58,8 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public int GetCurrentHealth() => currentHealth;
+    public int GetMaxHealth() => startingHealth;
 
 
     //private void Die()

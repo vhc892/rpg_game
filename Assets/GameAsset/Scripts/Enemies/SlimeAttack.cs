@@ -38,7 +38,7 @@ public class SlimeAttack : MonoBehaviour, IEnemy
         rb.velocity = Vector2.zero;
 
         Vector2 startPos = rb.position;
-        Vector2 targetPos = player.position; // 👈 Dash đến vị trí người chơi
+        Vector2 targetPos = player.position;
 
         float elapsed = 0f;
 
@@ -49,7 +49,7 @@ public class SlimeAttack : MonoBehaviour, IEnemy
             yield return null;
         }
 
-        rb.MovePosition(targetPos); // đảm bảo đến đúng vị trí
+        rb.MovePosition(targetPos);
 
         if (pathfinding != null)
             pathfinding.enabled = true;

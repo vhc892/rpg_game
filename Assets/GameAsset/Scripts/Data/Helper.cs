@@ -4,7 +4,10 @@ namespace Helper
     {
         Slime,
         Ghost,
-        Grape
+        Grape,
+        Goblin,
+        FireSlime,
+        Boss
     }
     public enum GameMode
     {

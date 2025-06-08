@@ -31,12 +31,11 @@ public class CutsceneController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isTransitioning)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (currentCoroutine != null)
                 StopCoroutine(currentCoroutine);
-
-            ShowNextImage();
+            SceneManager.LoadScene(2);
         }
     }
 

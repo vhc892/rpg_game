@@ -39,7 +39,6 @@ public class Goblin : MonoBehaviour, IEnemy
 
             spriteRenderer.flipX = isFacingLeft;
 
-            // ✅ Flip hitboxPivot (mirror X)
             if (hitboxPivot != null)
             {
                 Vector3 scale = hitboxPivot.localScale;

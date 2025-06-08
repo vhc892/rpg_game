@@ -40,6 +40,7 @@ public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
     private int enemiesKilled = 0;
     private int totalEnemiesThisWave = 0;
     private bool waitingForContinue = false;
+    private int waveCounter = 0;
 
     private void OnEnable()
     {
@@ -66,6 +67,7 @@ public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
             ShowWaveCompleteUI();
         }
     }
+
     private void ShowWaveCompleteUI()
     {
         if (waveCompleteText != null)
@@ -77,6 +79,7 @@ public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
 
         StartCoroutine(PlayCoinRewardEffect());
     }
+
     private IEnumerator PlayCoinRewardEffect()
     {
         List<Vector2> originalAnchors = new List<Vector2>();
@@ -102,12 +105,12 @@ public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
 
             coin.DOScale(0.5f, coinFlyDuration).SetEase(Ease.InSine);
 
-            yield return new WaitForSeconds(0.25f);//delay between coin
+            yield return new WaitForSeconds(0.25f); // delay between coin
         }
 
         yield return new WaitForSeconds(coinFlyDuration + 0.2f);
 
-        // hide waveCompleteText
+        // Hide wave complete text
         if (waveCompleteText != null)
         {
             waveCompleteText.DOFade(0f, 0.3f);
@@ -116,6 +119,7 @@ public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
                 waveCompleteText.gameObject.SetActive(false);
             });
         }
+
         UIManager.Instance.upgradePanel.gameObject.SetActive(true);
     }
 
@@ -125,32 +129,41 @@ public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
         waitingForContinue = false;
         StartCoroutine(StartNextWave());
     }
+
     private IEnumerator StartNextWave()
     {
+        waveCounter++;
+
+        // wave loop
         if (currentWaveIndex >= waves.Count)
         {
-            Debug.Log("All waves completed!");
-            yield break;
+            Debug.Log("All waves completed — looping and increasing difficulty!");
+            currentWaveIndex = 0;
+
+            foreach (var currentWave in waves)
+            {
+                currentWave.enemyCount += 1;
+            }
         }
-        //hightest wave
+
+        // update Highest Wave
         int savedHighest = PlayerPrefs.GetInt("HighestWave", 0);
-        if (currentWaveIndex + 1 > savedHighest)
+        if (waveCounter > savedHighest)
         {
-            PlayerPrefs.SetInt("HighestWave", currentWaveIndex + 1);
+            PlayerPrefs.SetInt("HighestWave", waveCounter);
             PlayerPrefs.Save();
             UpdateHighestWaveUI();
         }
-        // Countdown UI
+
+        // Countdown
         if (waveCountdownText != null)
         {
             waveCountdownText.gameObject.SetActive(true);
-
             for (int i = 5; i > 0; i--)
             {
-                waveCountdownText.text = $"Wave {currentWaveIndex + 1} starting in {i}...";
+                waveCountdownText.text = $"Wave {waveCounter} starting in {i}...";
                 yield return new WaitForSeconds(1f);
             }
-
             waveCountdownText.gameObject.SetActive(false);
         }
 
@@ -167,9 +180,10 @@ public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
             yield return new WaitForSeconds(wave.spawnInterval);
         }
 
-        Debug.Log($"Wave {currentWaveIndex + 1} started.");
+        Debug.Log($"Wave {waveCounter} started.");
         currentWaveIndex++;
     }
+
     private void UpdateHighestWaveUI()
     {
         if (highestWaveText != null)

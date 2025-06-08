@@ -21,7 +21,7 @@ public class PickupSpawner : MonoBehaviour
         }
         else if (randomNum == 3)
         {
-            int RandomAmountOfGold = Random.Range(1, 5);
+            int RandomAmountOfGold = Random.Range(1, 3);
             for (int i = 0; i < RandomAmountOfGold; i++)
             {
                 GameObject coin = Instantiate(goinCoin, transform.position, Quaternion.identity, parentTransform);

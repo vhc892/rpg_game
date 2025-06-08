@@ -1170,8 +1170,9 @@ MonoBehaviour:
   - {fileID: 231921987}
   - {fileID: 744839217}
   - {fileID: 1313435622}
-  displayTime: 3
+  displayTime: 2
   fadeDuration: 1
+  isFinalCutScene: 0
 --- !u!4 &1396384090
 Transform:
   m_ObjectHideFlags: 0

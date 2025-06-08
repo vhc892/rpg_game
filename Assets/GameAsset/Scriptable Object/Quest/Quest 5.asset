@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f76d6e3950294a4785e5fbc1ed8edfc, type: 3}
-  m_Name: Quest 3
+  m_Name: Quest 5
   m_EditorClassIdentifier: 
-  questID: 3
-  questTitle: Kill 3 Goblin
-  targetType: 3
+  questID: 5
+  questTitle: Kill 3 Ghost
+  targetType: 1
   requiredCount: 3
-  goldReward: 2
+  goldReward: 10

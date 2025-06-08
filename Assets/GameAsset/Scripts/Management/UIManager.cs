@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -11,6 +11,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject questBlockerPanel;
     public GameObject settingPanel;
     public GameObject notEnoughGoldPanel;
+    public Slider bossHealthSlider;
 
     public TMP_Text questBlockerText;
 
@@ -35,6 +36,8 @@ public class UIManager : Singleton<UIManager>
         upgradePanel.SetActive(false);
         notEnoughGoldPanel.SetActive(false);
         questBlockerPanel.SetActive(false);
+        bossHealthSlider.gameObject.SetActive(false);
+        Debug.Log("turn off panel");
     }
     public void ShowNotEnoughGold()
     {
