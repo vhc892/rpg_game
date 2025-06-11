@@ -19,7 +19,7 @@ public class DamageSource : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Enemy already dead");
+            //Debug.LogWarning("Enemy already dead");
         }
 
     }

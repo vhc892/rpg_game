@@ -98,6 +98,7 @@ public class PlayerHealth : Singleton<PlayerHealth>
     {
         yield return new WaitForSeconds(2f);
         LevelManager.Instance.LoadLevel(0);
+        transform.position = Vector3.zero;
         Respawn();
     }
     private IEnumerator DamageRecoveryRoutine()

@@ -170,10 +170,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamChangeDirFloat: 2
-  attackRange: 5
+  attackRange: 6
   enemyType: {fileID: 5679483389741671269}
   attackCooldown: 2
-  stopMovingWhileAttacking: 0
+  stopMovingWhileAttacking: 1
 --- !u!114 &914547486008855903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bea82f44a955554fb37a4dfa4116124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 3
 --- !u!95 &8146578490835270255
 Animator:
   serializedVersion: 5
@@ -224,6 +224,7 @@ MonoBehaviour:
   deathVFXPrefab: {fileID: 1367351114251052912, guid: 092d587dbf8b9ab469df7d1c2923a6d8, type: 3}
   knockBackThrust: 15
   enemyType: 2
+  enemyPrefabReference: {fileID: 465023549624768121}
 --- !u!114 &698155844000222161
 MonoBehaviour:
   m_ObjectHideFlags: 0

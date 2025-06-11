@@ -1,14 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Helper;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, IPoolable
 {
+    [Header("Stats")]
     [SerializeField] private int startingHealth = 3;
     [SerializeField] private GameObject deathVFXPrefab;
     [SerializeField] private float knockBackThrust = 15f;
     [SerializeField] private EnemyType enemyType;
+
+    [Header("Pooling")]
+    [SerializeField] private GameObject enemyPrefabReference;
 
     private int currentHealth;
     private Knockback knockback;
@@ -49,17 +53,31 @@ public class EnemyHealth : MonoBehaviour
             if (GameModeManager.Instance.CurrentMode == GameMode.MainGame)
             {
                 QuestManager.Instance.RegisterEnemyKilled(enemyType);
+                Destroy(gameObject);
             }
             else if (GameModeManager.Instance.CurrentMode == GameMode.Survival)
             {
                 GameEvents.RaiseEnemyKilledSurvival();
+                ObjectPoolManager.Instance.ReturnToPool(enemyPrefabReference, this.gameObject);
             }
-
-            Destroy(gameObject);
         }
     }
     public int GetCurrentHealth() => currentHealth;
     public int GetMaxHealth() => startingHealth;
+
+    public void OnTakenFromPool()
+    {
+        currentHealth = startingHealth;
+        knockback?.ResetKnockback();
+        flash?.ResetFlash();
+    }
+
+    public void OnReturnedToPool()
+    {
+        // need clean before back to pool, put in here
+        knockback?.ResetKnockback();
+        flash?.ResetFlash();
+    }
 
 
     //private void Die()

@@ -176,7 +176,8 @@ public class SurvivalWaveManager : Singleton<SurvivalWaveManager>
         for (int i = 0; i < wave.enemyCount; i++)
         {
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-            Instantiate(wave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            //Instantiate(wave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            GameObject enemy = ObjectPoolManager.Instance.GetObject(wave.enemyPrefab, spawnPoint.position, spawnPoint.rotation);
             yield return new WaitForSeconds(wave.spawnInterval);
         }
 

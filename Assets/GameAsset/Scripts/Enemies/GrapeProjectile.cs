@@ -13,9 +13,9 @@ public class GrapeProjectile : MonoBehaviour
     private void Start()
     {
         GameObject grapeShadow =
-        Instantiate(grapeProjectileShadow, transform.position + new Vector3(0, -0.3f, 0), Quaternion.identity);
+        Instantiate(grapeProjectileShadow, transform.position + new Vector3(0, -0.3f, 0), Quaternion.identity, transform.parent);
 
-        Vector3 playerPos = PlayerController.Instance.transform.position;
+        Vector3 playerPos = PlayerController.Instance.transform.position - new Vector3(0, 0.5f, 0);
         Vector3 grapeShadowStartPosition = grapeShadow.transform.position;
 
         StartCoroutine(ProjectileCurveRoutine(transform.position, playerPos));

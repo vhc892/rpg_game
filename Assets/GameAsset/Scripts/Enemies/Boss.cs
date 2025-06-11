@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
@@ -18,6 +19,14 @@ public class Boss : MonoBehaviour
     {
         StartCoroutine(InitAfterDelay());
     }
+    private void OnDestroy()
+    {
+        if (bossHealthSlider != null)
+        {
+            bossHealthSlider.gameObject.SetActive(false);
+        }
+    }
+
 
     private IEnumerator InitAfterDelay()
     {
@@ -61,7 +70,7 @@ public class Boss : MonoBehaviour
 
         shooter.SetStagger(true);
         shooter.SetOscillate(true);
-        shooter.SetBurst(3, 5, 60f);
+        shooter.SetBurst(3, 5, 60f, 8);
 
         Debug.Log("Boss đã vào Phase 2!");
     }
@@ -72,5 +81,11 @@ public class Boss : MonoBehaviour
             bossHealthSlider.gameObject.SetActive(false);
         }
         enabled = false;
+        StartCoroutine(WaitLoadCutScene());
+    }
+    private IEnumerator WaitLoadCutScene()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(3);
     }
 }

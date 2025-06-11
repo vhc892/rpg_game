@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Flash : MonoBehaviour
@@ -9,6 +8,7 @@ public class Flash : MonoBehaviour
 
     private Material defaultMat;
     private SpriteRenderer spriteRenderer;
+    private Coroutine flashCoroutine;
 
     private void Awake()
     {
@@ -21,8 +21,29 @@ public class Flash : MonoBehaviour
     }
     public IEnumerator FlashRoutine()
     {
+        if (flashCoroutine != null)
+            StopCoroutine(flashCoroutine);
+
+        flashCoroutine = StartCoroutine(FlashSequence());
+        yield return flashCoroutine;
+    }
+    private IEnumerator FlashSequence()
+    {
         spriteRenderer.material = whiteFlashMat;
         yield return new WaitForSeconds(restoreDefaultMatTime);
         spriteRenderer.material = defaultMat;
+    }
+
+    public void ResetFlash()
+    {
+        if (flashCoroutine != null)
+        {
+            StopCoroutine(flashCoroutine);
+            flashCoroutine = null;
+        }
+        if (spriteRenderer != null && defaultMat != null)
+        {
+            spriteRenderer.material = defaultMat;
+        }
     }
 }

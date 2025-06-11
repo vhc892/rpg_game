@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bea82f44a955554fb37a4dfa4116124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 4
 --- !u!95 &1598854361230062631
 Animator:
   serializedVersion: 5
@@ -314,6 +314,7 @@ MonoBehaviour:
   deathVFXPrefab: {fileID: 1367351114251052912, guid: 092d587dbf8b9ab469df7d1c2923a6d8, type: 3}
   knockBackThrust: 15
   enemyType: 3
+  enemyPrefabReference: {fileID: 1177388861563427307}
 --- !u!114 &8977956181976441775
 MonoBehaviour:
   m_ObjectHideFlags: 0

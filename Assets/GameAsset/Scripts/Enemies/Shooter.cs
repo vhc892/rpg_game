@@ -19,10 +19,16 @@ public class Shooter : MonoBehaviour, IEnemy
 
     private bool isShooting = false;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
+    private Transform player;
+    public bool IsAttacking { get; private set; } = false;
+
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        player = PlayerController.Instance.transform;
     }
     private void OnValidate()
     {
@@ -39,8 +45,16 @@ public class Shooter : MonoBehaviour, IEnemy
 
     public void Attack()
     {
+        if (player != null && spriteRenderer != null)
+        {
+            if (player.position.x < transform.position.x)
+                spriteRenderer.flipX = true;
+            else
+                spriteRenderer.flipX = false;
+        }
         if (!isShooting)
         {
+            IsAttacking = true;
             StartCoroutine(ShootRoutine());
         }
         if (animator != null)
@@ -84,7 +98,7 @@ public class Shooter : MonoBehaviour, IEnemy
             {
                 Vector2 pos = FindBulletSpawnPos(currentAngle);
 
-                GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
+                GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity, transform.parent);
                 newBullet.transform.right = newBullet.transform.position - transform.position;
 
 
@@ -105,6 +119,7 @@ public class Shooter : MonoBehaviour, IEnemy
 
         yield return new WaitForSeconds(restTime);
         isShooting = false;
+        IsAttacking = false;
     }
 
     private void TargetConeOfInfluence(out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
@@ -138,10 +153,11 @@ public class Shooter : MonoBehaviour, IEnemy
     public void SetStagger(bool value) => stagger = value;
     public void SetOscillate(bool value) => oscillate = value;
 
-    public void SetBurst(int burst, int perBurst, float spread)
+    public void SetBurst(int burst, int perBurst, float spread, int speed)
     {
         burstCount = burst;
         projectilesPerBurst = perBurst;
         angleSpread = spread;
+        bulletMoveSpeed = speed;
     }
 }

@@ -72,4 +72,9 @@ public class UIManager : Singleton<UIManager>
         Time.timeScale = 1f;
         SceneManager.LoadScene(4);
     }
+    public void SkipToBossBtn()
+    {
+        LevelManager.Instance.LoadLevel(9);
+        PlayerController.Instance.transform.position = Vector3.zero;
+    }
 }
