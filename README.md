@@ -1,5 +1,6 @@
 # rpg_game + video
-Link video demo
-https://drive.google.com/file/d/1_L5seb2G22Su4SMBa7snGZ_SOvqVsVEA/view?usp=sharing
+Link video demo: some levels (skip to boss), 2 mode (main game and survival)
 
-Unity, C#, Cinemachine, ScriptableObject, Singleton, State, JSON save/load,...
+https://drive.google.com/file/d/1gOOQzbGx3WxiiIBrREOuB3HAUkmJttXi/view?usp=sharing
+
+Unity, C#, Singleton, Object Pooling, Observer, State, JSON save/load, ScriptableObject...
