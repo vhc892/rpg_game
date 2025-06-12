@@ -11,12 +11,16 @@ public class UIManager : Singleton<UIManager>
     public GameObject questBlockerPanel;
     public GameObject settingPanel;
     public GameObject notEnoughGoldPanel;
+    public GameObject infoPanel;
     public Slider bossHealthSlider;
 
     public TMP_Text questBlockerText;
 
     private void Start()
     {
+#if !UNITY_EDITOR
+            Application.targetFrameRate = 60;
+#endif
         TurnOffPanel();
     }
     public void TurnOnSettingPanel()
@@ -29,6 +33,10 @@ public class UIManager : Singleton<UIManager>
         settingPanel.SetActive(false);
         Time.timeScale = 1f;
     }
+    public void TurnOnInfoPanel()
+    {
+        infoPanel.SetActive(true);
+    }
 
     public void TurnOffPanel()
     {
@@ -37,6 +45,7 @@ public class UIManager : Singleton<UIManager>
         notEnoughGoldPanel.SetActive(false);
         questBlockerPanel.SetActive(false);
         bossHealthSlider.gameObject.SetActive(false);
+        infoPanel.SetActive(false);
         Debug.Log("turn off panel");
     }
     public void ShowNotEnoughGold()
@@ -76,5 +85,14 @@ public class UIManager : Singleton<UIManager>
     {
         LevelManager.Instance.LoadLevel(9);
         PlayerController.Instance.transform.position = Vector3.zero;
+    }
+    public void BossDeath()
+    {
+        StartCoroutine(WaitLoadCutScene());
+    }
+    private IEnumerator WaitLoadCutScene()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(3);
     }
 }

@@ -76,16 +76,11 @@ public class Boss : MonoBehaviour
     }
     private void OnBossDeath()
     {
+        UIManager.Instance.BossDeath();
         if (bossHealthSlider != null)
         {
             bossHealthSlider.gameObject.SetActive(false);
         }
-        enabled = false;
-        StartCoroutine(WaitLoadCutScene());
-    }
-    private IEnumerator WaitLoadCutScene()
-    {
-        yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(3);
+        //enabled = false;
     }
 }

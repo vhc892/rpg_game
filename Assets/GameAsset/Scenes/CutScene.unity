@@ -1170,7 +1170,7 @@ MonoBehaviour:
   - {fileID: 231921987}
   - {fileID: 744839217}
   - {fileID: 1313435622}
-  displayTime: 2
+  displayTime: 1.5
   fadeDuration: 1
   isFinalCutScene: 0
 --- !u!4 &1396384090

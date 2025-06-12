@@ -807,7 +807,7 @@ MonoBehaviour:
   - {fileID: 580121963}
   - {fileID: 231921987}
   - {fileID: 744839217}
-  displayTime: 3
+  displayTime: 1.7
   fadeDuration: 1
   isFinalCutScene: 1
 --- !u!4 &1396384090
